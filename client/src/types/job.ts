@@ -1,21 +1,32 @@
+// Shape returned from the PostgreSQL backend
 export interface Job {
-  id: string;
+  id: number;
   title: string;
   company: string;
-  companyLogo: string;
   location: string;
-  type: JobType;
-  category: JobCategory;
-  salary: string;
+  category: string;
   description: string;
-  requirements: string[];
-  responsibilities: string[];
-  tags: string[];
-  postedDate: string;
-  featured: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
-export type JobType = "Full-time" | "Part-time" | "Contract" | "Remote" | "Internship";
+// Payload sent when creating a job via POST /api/jobs
+export interface CreateJobPayload {
+  title: string;
+  company: string;
+  location: string;
+  category: string;
+  description: string;
+}
+
+// Payload sent when submitting an application via POST /api/applications
+export interface JobApplication {
+  jobId: number;
+  name: string;
+  email: string;
+  resumeLink: string;
+  coverNote?: string;
+}
 
 export type JobCategory =
   | "Design"
@@ -26,10 +37,3 @@ export type JobCategory =
   | "Engineering"
   | "Business"
   | "Human Resources";
-
-export interface JobApplication {
-  name: string;
-  email: string;
-  resumeUrl: string;
-  coverNote: string;
-}
