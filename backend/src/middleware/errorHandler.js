@@ -13,29 +13,28 @@ const notFound = (req, res, next) => {
  */
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  // Mongoose bad ObjectId
-  if (err.name === 'CastError' && err.kind === 'ObjectId') {
+  // PostgreSQL foreign key violation (e.g. referencing a non-existent job)
+  if (err.code === '23503') {
     return res.status(404).json({
       success: false,
-      message: 'Resource not found',
+      message: 'Referenced resource not found',
     });
   }
 
-  // Mongoose duplicate key
-  if (err.code === 11000) {
+  // PostgreSQL unique constraint violation
+  if (err.code === '23505') {
     return res.status(409).json({
       success: false,
       message: 'Duplicate field value entered',
     });
   }
 
-  // Mongoose validation error
-  if (err.name === 'ValidationError') {
-    const messages = Object.values(err.errors).map((val) => val.message);
+  // PostgreSQL not-null / check constraint violation
+  if (err.code === '23502' || err.code === '23514') {
     return res.status(422).json({
       success: false,
       message: 'Validation failed',
-      errors: messages,
+      errors: [err.detail || err.message],
     });
   }
 
