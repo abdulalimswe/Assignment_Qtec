@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useJobs } from "@/context/JobContext";
+import { useJobsQuery, useCreateJobMutation, useDeleteJobMutation } from "@/hooks/useJobQueries";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -10,60 +10,66 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Plus, Trash2 } from "lucide-react";
 import { categories } from "@/data/jobs";
-import { Job, JobType, JobCategory } from "@/types/job";
+import { Job, JobCategory } from "@/types/job";
 import { useToast } from "@/hooks/use-toast";
+import { toast as sonnerToast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const jobSchema = z.object({
-  title: z.string().trim().min(1, "Title is required").max(100),
-  company: z.string().trim().min(1, "Company is required").max(100),
-  location: z.string().trim().min(1, "Location is required").max(100),
-  salary: z.string().trim().min(1, "Salary is required").max(50),
+  title:       z.string().trim().min(1, "Title is required").max(100),
+  company:     z.string().trim().min(1, "Company is required").max(100),
+  location:    z.string().trim().min(1, "Location is required").max(100),
   description: z.string().trim().min(1, "Description is required").max(5000),
 });
 
 type JobForm = z.infer<typeof jobSchema>;
 
 const Admin = () => {
-  const { jobs, addJob, deleteJob } = useJobs();
+  const { data, isLoading } = useJobsQuery({ limit: 100 });
+  const createJob = useCreateJobMutation();
+  const deleteJob = useDeleteJobMutation();
   const { toast } = useToast();
-  const [showForm, setShowForm] = useState(false);
-  const [jobType, setJobType] = useState<JobType>("Full-time");
+
+  const [showForm,    setShowForm]    = useState(false);
   const [jobCategory, setJobCategory] = useState<JobCategory>("Technology");
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<JobForm>({
     resolver: zodResolver(jobSchema),
   });
 
-  const onSubmit = (data: JobForm) => {
-    const { title, company, location, salary, description } = data;
-    addJob({
-      title,
-      company,
-      location,
-      salary,
-      description,
-      type: jobType,
-      category: jobCategory,
-      companyLogo: `https://ui-avatars.com/api/?name=${encodeURIComponent(data.company)}&background=4540DB&color=fff`,
-      requirements: ["See job description"],
-      responsibilities: ["See job description"],
-      tags: [jobType],
-      postedDate: new Date().toISOString().split("T")[0],
-      featured: false,
-    });
-    toast({ title: "Job Created", description: `"${data.title}" has been posted.` });
-    reset();
-    setShowForm(false);
+  const jobs = data?.data ?? [];
+
+  const onSubmit = async (data: JobForm) => {
+    try {
+      await createJob.mutateAsync({
+        title:       data.title,
+        company:     data.company,
+        location:    data.location,
+        category:    jobCategory,
+        description: data.description,
+      });
+      toast({ title: "Job Created", description: `"${data.title}" has been posted.` });
+      reset();
+      setShowForm(false);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to create job";
+      sonnerToast.error(msg);
+    }
   };
 
-  const handleDelete = (job: Job) => {
-    deleteJob(job.id);
-    toast({ title: "Job Deleted", description: `"${job.title}" has been removed.` });
+  const handleDelete = async (job: Job) => {
+    try {
+      await deleteJob.mutateAsync(job.id);
+      toast({ title: "Job Deleted", description: `"${job.title}" has been removed.` });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to delete job";
+      sonnerToast.error(msg);
+    }
   };
 
   return (
@@ -83,7 +89,10 @@ const Admin = () => {
 
           {/* Add Job Form */}
           {showForm && (
-            <form onSubmit={handleSubmit(onSubmit)} className="mb-10 space-y-4 rounded-xl border bg-card p-6">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="mb-10 space-y-4 rounded-xl border bg-card p-6"
+            >
               <h2 className="text-xl font-bold">New Job Listing</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
@@ -102,24 +111,11 @@ const Admin = () => {
                   {errors.location && <p className="text-sm text-destructive">{errors.location.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label>Salary *</Label>
-                  <Input {...register("salary")} placeholder="$100k - $130k" />
-                  {errors.salary && <p className="text-sm text-destructive">{errors.salary.message}</p>}
-                </div>
-                <div className="space-y-2">
-                  <Label>Type</Label>
-                  <Select value={jobType} onValueChange={(v) => setJobType(v as JobType)}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {(["Full-time", "Part-time", "Contract", "Remote", "Internship"] as JobType[]).map((t) => (
-                        <SelectItem key={t} value={t}>{t}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
                   <Label>Category</Label>
-                  <Select value={jobCategory} onValueChange={(v) => setJobCategory(v as JobCategory)}>
+                  <Select
+                    value={jobCategory}
+                    onValueChange={(v) => setJobCategory(v as JobCategory)}
+                  >
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
                       {categories.map((c) => (
@@ -131,12 +127,26 @@ const Admin = () => {
               </div>
               <div className="space-y-2">
                 <Label>Description *</Label>
-                <Textarea {...register("description")} placeholder="Job description..." rows={4} />
-                {errors.description && <p className="text-sm text-destructive">{errors.description.message}</p>}
+                <Textarea
+                  {...register("description")}
+                  placeholder="Job description..."
+                  rows={4}
+                />
+                {errors.description && (
+                  <p className="text-sm text-destructive">{errors.description.message}</p>
+                )}
               </div>
               <div className="flex gap-3">
-                <Button type="submit">Create Job</Button>
-                <Button type="button" variant="outline" onClick={() => { setShowForm(false); reset(); }}>Cancel</Button>
+                <Button type="submit" disabled={createJob.isPending}>
+                  {createJob.isPending ? "Posting…" : "Create Job"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => { setShowForm(false); reset(); }}
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           )}
@@ -150,43 +160,62 @@ const Admin = () => {
                   <TableHead className="hidden sm:table-cell">Company</TableHead>
                   <TableHead className="hidden md:table-cell">Location</TableHead>
                   <TableHead className="hidden lg:table-cell">Category</TableHead>
-                  <TableHead className="hidden lg:table-cell">Type</TableHead>
+                  <TableHead className="hidden lg:table-cell">Posted</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {jobs.map((job) => (
-                  <TableRow key={job.id}>
-                    <TableCell className="font-medium">{job.title}</TableCell>
-                    <TableCell className="hidden sm:table-cell">{job.company}</TableCell>
-                    <TableCell className="hidden md:table-cell">{job.location}</TableCell>
-                    <TableCell className="hidden lg:table-cell"><Badge variant="secondary">{job.category}</Badge></TableCell>
-                    <TableCell className="hidden lg:table-cell">{job.type}</TableCell>
-                    <TableCell className="text-right">
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Delete Job</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to delete "{job.title}"? This action cannot be undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => handleDelete(job)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                              Delete
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {isLoading
+                  ? Array.from({ length: 5 }).map((_, i) => (
+                      <TableRow key={i}>
+                        {Array.from({ length: 6 }).map((__, j) => (
+                          <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  : jobs.map((job) => (
+                      <TableRow key={job.id}>
+                        <TableCell className="font-medium">{job.title}</TableCell>
+                        <TableCell className="hidden sm:table-cell">{job.company}</TableCell>
+                        <TableCell className="hidden md:table-cell">{job.location}</TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          <Badge variant="secondary">{job.category}</Badge>
+                        </TableCell>
+                        <TableCell className="hidden lg:table-cell">
+                          {new Date(job.created_at).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-destructive hover:text-destructive"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Delete Job</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Are you sure you want to delete "{job.title}"? This action cannot be undone.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDelete(job)}
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
           </div>
