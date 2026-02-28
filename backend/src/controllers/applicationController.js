@@ -17,7 +17,7 @@ const submitApplication = async (req, res, next) => {
     }
 
     const application = await Application.create({
-      job: jobId,
+      jobId,
       name,
       email,
       resumeLink,
@@ -44,7 +44,7 @@ const getApplicationsByJob = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Job not found' });
     }
 
-    const applications = await Application.find({ job: jobId }).sort({ createdAt: -1 });
+    const applications = await Application.findByJobId(jobId);
 
     res.status(200).json({ success: true, total: applications.length, data: applications });
   } catch (error) {

@@ -9,33 +9,23 @@ const getJobs = async (req, res, next) => {
   try {
     const { search, category, location, page = 1, limit = 10 } = req.query;
 
-    const query = {};
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const offset = (pageNum - 1) * limitNum;
 
-    // Full-text search on title, company, and location
-    if (search) {
-      query.$text = { $search: search };
-    }
-
-    if (category) {
-      query.category = { $regex: new RegExp(category, 'i') };
-    }
-
-    if (location) {
-      query.location = { $regex: new RegExp(location, 'i') };
-    }
-
-    const skip = (Number(page) - 1) * Number(limit);
-    const total = await Job.countDocuments(query);
-    const jobs = await Job.find(query)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(Number(limit));
+    const { total, rows: jobs } = await Job.findAll({
+      search: search || null,
+      category: category || null,
+      location: location || null,
+      limit: limitNum,
+      offset,
+    });
 
     res.status(200).json({
       success: true,
       total,
-      page: Number(page),
-      pages: Math.ceil(total / Number(limit)),
+      page: pageNum,
+      pages: Math.ceil(total / limitNum),
       data: jobs,
     });
   } catch (error) {
@@ -86,7 +76,7 @@ const createJob = async (req, res, next) => {
  */
 const deleteJob = async (req, res, next) => {
   try {
-    const job = await Job.findByIdAndDelete(req.params.id);
+    const job = await Job.remove(req.params.id);
 
     if (!job) {
       return res.status(404).json({ success: false, message: 'Job not found' });
