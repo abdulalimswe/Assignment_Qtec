@@ -52,6 +52,11 @@ const validateJob = [
  * Validation rules for POST /api/applications
  */
 const validateApplication = [
+  body('jobId')
+    .trim()
+    .notEmpty().withMessage('Job ID is required')
+    .isMongoId().withMessage('Job ID must be a valid MongoDB ObjectId'),
+
   body('name')
     .trim()
     .notEmpty().withMessage('Applicant name is required')
