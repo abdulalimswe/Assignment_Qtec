@@ -18,9 +18,9 @@ const baseConfig = process.env.DATABASE_URL
 // concurrent requests, so a large pool wastes limited DB connections.
 const pool = new Pool({
   ...baseConfig,
-  max:                   process.env.NODE_ENV === 'production' ? 2 : 10,
-  idleTimeoutMillis:     10_000,   // release idle clients quickly
-  connectionTimeoutMillis: 5_000,  // fail fast if DB is unreachable
+  max:                     process.env.NODE_ENV === 'production' ? 2 : 10,
+  idleTimeoutMillis:       10_000,  // release idle clients quickly
+  connectionTimeoutMillis: 15_000,  // allow Render free-tier DB to wake up (~10s)
 });
 
 pool.on('error', (err) => {
