@@ -1,6 +1,10 @@
 import { Job, CreateJobPayload, JobApplication } from "@/types/job";
 
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+const BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? "http://localhost:5001/api"
+    : "https://quickhire-five.vercel.app/api");
 
 // ── Generic request helper ────────────────────────────────────────────────────
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
