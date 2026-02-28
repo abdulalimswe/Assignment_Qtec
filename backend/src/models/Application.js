@@ -1,40 +1,21 @@
-const mongoose = require('mongoose');
+const { pool } = require('../config/db');
 
-const applicationSchema = new mongoose.Schema(
-  {
-    job: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Job',
-      required: [true, 'Job reference is required'],
-    },
-    name: {
-      type: String,
-      required: [true, 'Applicant name is required'],
-      trim: true,
-      maxlength: [100, 'Name cannot exceed 100 characters'],
-    },
-    email: {
-      type: String,
-      required: [true, 'Email is required'],
-      trim: true,
-      lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
-    },
-    resumeLink: {
-      type: String,
-      required: [true, 'Resume link is required'],
-      trim: true,
-      match: [/^https?:\/\/.+/, 'Resume link must be a valid URL starting with http or https'],
-    },
-    coverNote: {
-      type: String,
-      trim: true,
-      default: '',
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+const create = async ({ jobId, name, email, resumeLink, coverNote }) => {
+  const result = await pool.query(
+    `INSERT INTO applications (job_id, name, email, resume_link, cover_note)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING *`,
+    [jobId, name, email, resumeLink, coverNote || '']
+  );
+  return result.rows[0];
+};
 
-module.exports = mongoose.model('Application', applicationSchema);
+const findByJobId = async (jobId) => {
+  const result = await pool.query(
+    'SELECT * FROM applications WHERE job_id = $1 ORDER BY created_at DESC',
+    [jobId]
+  );
+  return result.rows;
+};
+
+module.exports = { create, findByJobId };
