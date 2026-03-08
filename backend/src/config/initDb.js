@@ -3,6 +3,7 @@ const { pool } = require('./db');
 const initDb = async () => {
   const client = await pool.connect();
   try {
+    // CREATE TABLE statements are no-ops for the JSON store and real DDL for PostgreSQL
     await client.query(`
       CREATE TABLE IF NOT EXISTS jobs (
         id          SERIAL PRIMARY KEY,
@@ -30,6 +31,14 @@ const initDb = async () => {
     `);
 
     console.log('Database tables initialised');
+
+    // Auto-seed when table is empty
+    const { rows } = await client.query('SELECT COUNT(*) AS count FROM jobs');
+    const count = parseInt(rows[0].count, 10);
+    if (count === 0) {
+      console.log('Seeding database with sample jobs...');
+      await require('./seed').run(client);
+    }
   } finally {
     client.release();
   }

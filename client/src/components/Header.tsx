@@ -21,8 +21,6 @@ const Header = () => {
         <nav className="hidden items-center gap-8 md:flex">
           <NavLink to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" activeClassName="text-primary">Home</NavLink>
           <NavLink to="/jobs" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" activeClassName="text-primary">Jobs</NavLink>
-          <NavLink to="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" activeClassName="text-primary">About</NavLink>
-          <NavLink to="/contact" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground" activeClassName="text-primary">Contact</NavLink>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
@@ -46,8 +44,6 @@ const Header = () => {
           <nav className="flex flex-col gap-3 pt-3">
             <NavLink to="/" className="text-sm font-medium text-muted-foreground" activeClassName="text-primary" onClick={() => setMobileOpen(false)}>Home</NavLink>
             <NavLink to="/jobs" className="text-sm font-medium text-muted-foreground" activeClassName="text-primary" onClick={() => setMobileOpen(false)}>Jobs</NavLink>
-            <NavLink to="/about" className="text-sm font-medium text-muted-foreground" activeClassName="text-primary" onClick={() => setMobileOpen(false)}>About</NavLink>
-            <NavLink to="/contact" className="text-sm font-medium text-muted-foreground" activeClassName="text-primary" onClick={() => setMobileOpen(false)}>Contact</NavLink>
             <Button className="mt-2 w-full" asChild>
               <Link to="/admin" onClick={() => setMobileOpen(false)}>Post a Job</Link>
             </Button>

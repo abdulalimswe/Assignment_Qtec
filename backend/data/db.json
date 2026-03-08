@@ -1,0 +1,129 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Senior Frontend Developer",
+      "company": "Stripe",
+      "location": "Remote",
+      "category": "Technology",
+      "description": "We are looking for a Senior Frontend Developer to join our growing engineering team at Stripe.\n\nResponsibilities:\n- Build and maintain high-performance React applications used by millions of users worldwide\n- Collaborate closely with designers, product managers, and backend engineers\n- Lead code reviews and mentor junior developers\n- Drive frontend architecture decisions and best practices\n\nRequirements:\n- 5+ years of experience with React and TypeScript\n- Deep understanding of web performance optimization\n- Experience with testing frameworks (Jest, Cypress)\n- Strong eye for detail and commitment to quality\n\nBenefits:\n- Competitive salary and equity package\n- Fully remote with flexible working hours\n- $3,000 annual learning & development budget\n- Health, dental, and vision insurance",
+      "created_at": "2026-03-07T18:07:07.964Z",
+      "updated_at": "2026-03-07T18:07:07.971Z"
+    },
+    {
+      "id": 2,
+      "title": "Backend Engineer (Node.js)",
+      "company": "Shopify",
+      "location": "Toronto, Canada",
+      "category": "Technology",
+      "description": "Shopify is hiring a Backend Engineer to work on our core commerce infrastructure.\n\nResponsibilities:\n- Design and implement scalable REST and GraphQL APIs\n- Build microservices that handle millions of transactions per day\n- Optimize database queries and improve system reliability\n- Participate in on-call rotations and incident response\n\nRequirements:\n- 3+ years of Node.js and PostgreSQL experience\n- Familiarity with distributed systems and event-driven architecture\n- Experience with Docker and Kubernetes\n- Strong communication skills\n\nBenefits:\n- Stock options and profit-sharing\n- Flexible hybrid work policy\n- Parental leave and family benefits\n- Annual wellness allowance",
+      "created_at": "2026-03-07T18:07:07.972Z",
+      "updated_at": "2026-03-07T18:07:07.972Z"
+    },
+    {
+      "id": 3,
+      "title": "Product Designer (UI/UX)",
+      "company": "Figma",
+      "location": "San Francisco, USA",
+      "category": "Design",
+      "description": "Figma is looking for a talented Product Designer to shape the future of collaborative design tools.\n\nResponsibilities:\n- Own end-to-end design for key product areas from research to launch\n- Conduct user interviews, usability tests, and synthesize insights\n- Create wireframes, prototypes, and high-fidelity mockups in Figma\n- Work closely with engineers to ensure pixel-perfect implementation\n\nRequirements:\n- 4+ years of product design experience\n- Strong portfolio showcasing complex problem-solving\n- Expertise in interaction design and design systems\n- Excellent communication and storytelling skills\n\nBenefits:\n- Generous equity package\n- Creative and collaborative work environment\n- Top-of-the-line hardware and tools\n- Unlimited PTO policy",
+      "created_at": "2026-03-07T18:07:07.972Z",
+      "updated_at": "2026-03-07T18:07:07.973Z"
+    },
+    {
+      "id": 4,
+      "title": "Data Scientist",
+      "company": "Netflix",
+      "location": "Los Angeles, USA",
+      "category": "Technology",
+      "description": "Netflix is seeking a Data Scientist to join our Personalization & Recommendations team.\n\nResponsibilities:\n- Develop ML models to improve content recommendations for 230M+ subscribers\n- Design and analyze A/B experiments at massive scale\n- Work with petabyte-scale datasets using Spark and Python\n- Communicate findings to senior leadership and cross-functional teams\n\nRequirements:\n- MS or PhD in Statistics, Computer Science, or related field\n- 3+ years experience in a data scientist role\n- Proficiency in Python, SQL, and machine learning frameworks (PyTorch/TensorFlow)\n- Experience with A/B testing and causal inference\n\nBenefits:\n- Industry-leading salary and stock options\n- Freedom and responsibility culture\n- Unlimited vacation policy\n- Comprehensive health benefits",
+      "created_at": "2026-03-07T18:07:07.973Z",
+      "updated_at": "2026-03-07T18:07:07.973Z"
+    },
+    {
+      "id": 5,
+      "title": "Digital Marketing Manager",
+      "company": "HubSpot",
+      "location": "Dublin, Ireland",
+      "category": "Marketing",
+      "description": "HubSpot is looking for a Digital Marketing Manager to drive our EMEA growth strategy.\n\nResponsibilities:\n- Plan and execute multi-channel digital marketing campaigns (SEO, SEM, social, email)\n- Manage a €500K monthly paid media budget\n- Analyse campaign performance and report on key KPIs\n- Collaborate with sales to develop ABM strategies\n\nRequirements:\n- 4+ years of digital marketing experience, preferably in SaaS\n- Proficiency with HubSpot, Google Analytics, and paid media platforms\n- Data-driven mindset with strong analytical skills\n- Experience managing and growing a team\n\nBenefits:\n- Hybrid work (3 days office / 2 days remote)\n- Excellent pension and healthcare package\n- €2,000 annual education budget\n- Regular team events and company retreats",
+      "created_at": "2026-03-07T18:07:07.973Z",
+      "updated_at": "2026-03-07T18:07:07.973Z"
+    },
+    {
+      "id": 6,
+      "title": "DevOps Engineer",
+      "company": "Cloudflare",
+      "location": "Remote",
+      "category": "Technology",
+      "description": "Cloudflare is hiring a DevOps Engineer to help scale infrastructure serving millions of requests per second.\n\nResponsibilities:\n- Design and maintain CI/CD pipelines across multiple cloud providers\n- Manage Kubernetes clusters and containerized workloads\n- Implement monitoring, alerting, and incident response processes\n- Automate infrastructure provisioning using Terraform\n\nRequirements:\n- 3+ years of DevOps or SRE experience\n- Strong experience with AWS/GCP, Kubernetes, and Terraform\n- Proficiency in scripting (Bash, Python)\n- Experience with observability tools (Prometheus, Grafana, Datadog)\n\nBenefits:\n- Fully remote with home office stipend\n- Competitive salary + RSUs\n- 401(k) matching\n- Flexible working hours across time zones",
+      "created_at": "2026-03-07T18:07:07.973Z",
+      "updated_at": "2026-03-07T18:07:07.973Z"
+    },
+    {
+      "id": 7,
+      "title": "Financial Analyst",
+      "company": "Goldman Sachs",
+      "location": "New York, USA",
+      "category": "Finance",
+      "description": "Goldman Sachs is seeking a Financial Analyst for our Asset Management division.\n\nResponsibilities:\n- Build and maintain complex financial models for portfolio analysis\n- Prepare investment memos and quarterly performance reports\n- Conduct due diligence on potential investment opportunities\n- Collaborate with senior analysts and portfolio managers\n\nRequirements:\n- Bachelor's degree in Finance, Economics, or Accounting\n- 2+ years of financial modelling experience\n- CFA Level I (or progress towards) preferred\n- Proficiency in Excel, Bloomberg, and SQL\n\nBenefits:\n- Competitive salary with performance bonus\n- Career development and sponsorship for CFA\n- Comprehensive health and dental coverage\n- Access to exclusive networking events",
+      "created_at": "2026-03-07T18:07:07.974Z",
+      "updated_at": "2026-03-07T18:07:07.974Z"
+    },
+    {
+      "id": 8,
+      "title": "Mobile Developer (React Native)",
+      "company": "Grab",
+      "location": "Singapore",
+      "category": "Technology",
+      "description": "Grab is looking for a Mobile Developer to build features for Southeast Asia's leading superapp.\n\nResponsibilities:\n- Develop and ship new features in the Grab app (React Native)\n- Optimize app performance and reduce crash rates\n- Collaborate with product, design, and backend teams\n- Write unit and integration tests to ensure code quality\n\nRequirements:\n- 3+ years of React Native development experience\n- Strong knowledge of JavaScript/TypeScript and native modules\n- Experience with state management (Redux, Zustand)\n- Familiarity with iOS and Android deployment pipelines\n\nBenefits:\n- Flexible hybrid working arrangement\n- Stock grants and annual bonus\n- Medical, dental, and vision coverage\n- Monthly transport and meal subsidies",
+      "created_at": "2026-03-07T18:07:07.974Z",
+      "updated_at": "2026-03-07T18:07:07.974Z"
+    },
+    {
+      "id": 9,
+      "title": "Content Strategist",
+      "company": "Canva",
+      "location": "Sydney, Australia",
+      "category": "Marketing",
+      "description": "Canva is hiring a Content Strategist to lead content initiatives across our global blog and social channels.\n\nResponsibilities:\n- Develop and execute a content strategy that drives organic growth\n- Manage a team of writers and freelancers\n- Work with SEO specialists to identify high-impact content opportunities\n- Track content performance and continuously optimise the editorial calendar\n\nRequirements:\n- 3+ years of content strategy or editorial experience\n- Strong understanding of SEO principles\n- Excellent writing and editing skills\n- Experience with content management systems and analytics tools\n\nBenefits:\n- Equity in a fast-growing company\n- $1,000 monthly wellness budget\n- Dog-friendly Sydney office\n- Generous parental leave",
+      "created_at": "2026-03-07T18:07:07.974Z",
+      "updated_at": "2026-03-07T18:07:07.974Z"
+    },
+    {
+      "id": 10,
+      "title": "Full Stack Engineer",
+      "company": "Notion",
+      "location": "Remote",
+      "category": "Technology",
+      "description": "Notion is looking for a Full Stack Engineer to help build the all-in-one workspace used by millions.\n\nResponsibilities:\n- Build product features across the full stack (React, Node.js, PostgreSQL)\n- Improve performance, reliability, and scalability of core systems\n- Collaborate with product and design in a fast-paced environment\n- Contribute to technical architecture discussions\n\nRequirements:\n- 3+ years of full-stack development experience\n- Proficiency in React, TypeScript, and Node.js\n- Experience with relational databases and query optimization\n- Strong product sense and attention to detail\n\nBenefits:\n- Fully remote with biannual team offsites\n- Competitive salary and equity\n- $1,000 home office setup budget\n- Monthly stipend for internet and phone",
+      "created_at": "2026-03-07T18:07:07.974Z",
+      "updated_at": "2026-03-07T18:07:07.974Z"
+    },
+    {
+      "id": 11,
+      "title": "Healthcare Data Analyst",
+      "company": "Philips",
+      "location": "Amsterdam, Netherlands",
+      "category": "Healthcare",
+      "description": "Philips Health Systems is seeking a Healthcare Data Analyst to improve patient outcomes through data.\n\nResponsibilities:\n- Analyse clinical and operational datasets to identify improvement opportunities\n- Build dashboards and reports for hospital clients using Power BI\n- Work with clinical teams to define KPIs and data quality standards\n- Support data governance and GDPR compliance initiatives\n\nRequirements:\n- Bachelor's degree in Health Informatics, Statistics, or related field\n- 2+ years experience in healthcare analytics\n- Proficiency in SQL, Python, and Power BI\n- Understanding of HL7/FHIR data standards preferred\n\nBenefits:\n- Hybrid work (2 days remote)\n- 30 vacation days per year\n- Employee discounts on Philips products\n- Comprehensive pension and wellness programme",
+      "created_at": "2026-03-07T18:07:07.975Z",
+      "updated_at": "2026-03-07T18:07:07.975Z"
+    },
+    {
+      "id": 12,
+      "title": "Cybersecurity Engineer",
+      "company": "CrowdStrike",
+      "location": "Austin, USA",
+      "category": "Technology",
+      "description": "CrowdStrike is hiring a Cybersecurity Engineer to protect our platform and customers from advanced threats.\n\nResponsibilities:\n- Perform security reviews of infrastructure, APIs, and application code\n- Develop automated security testing tools and integrate them into CI/CD pipelines\n- Respond to and investigate security incidents\n- Research emerging threats and implement proactive countermeasures\n\nRequirements:\n- 4+ years of cybersecurity engineering experience\n- Deep knowledge of OWASP Top 10 and network security protocols\n- Experience with SIEM tools, threat modelling, and penetration testing\n- Security certifications (CISSP, CEH, OSCP) are a plus\n\nBenefits:\n- Remote-first culture\n- Competitive RSU package\n- $5,000 annual professional development budget\n- Full health, dental, and vision coverage",
+      "created_at": "2026-03-07T18:07:07.975Z",
+      "updated_at": "2026-03-07T18:07:07.975Z"
+    }
+  ],
+  "applications": [],
+  "_seq": {
+    "jobs": 12,
+    "applications": 0
+  }
+}

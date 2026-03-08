@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { pool } = require('./db');
 
+
 const jobs = [
   {
     title: 'Senior Frontend Developer',
@@ -304,30 +305,33 @@ Benefits:
   },
 ];
 
-async function seed() {
-  const client = await pool.connect();
-  try {
-    // Clear existing jobs (cascade deletes applications too)
-    await client.query('DELETE FROM jobs');
-    console.log('Cleared existing jobs');
-
-    for (const job of jobs) {
-      await client.query(
-        `INSERT INTO jobs (title, company, location, category, description)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [job.title, job.company, job.location, job.category, job.description]
-      );
-      console.log(`  ✓ ${job.title} @ ${job.company}`);
-    }
-
-    console.log(`\nSeeded ${jobs.length} jobs successfully.`);
-  } finally {
-    client.release();
-    await pool.end();
+// ─── Exported helper called by initDb.js when the table is empty ─────────────
+async function run(client) {
+  for (const job of jobs) {
+    await client.query(
+      `INSERT INTO jobs (title, company, location, category, description)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [job.title, job.company, job.location, job.category, job.description]
+    );
   }
+  console.log(`Seeded ${jobs.length} jobs.`);
 }
+exports.run = run;
 
-seed().catch((err) => {
-  console.error('Seed failed:', err.message);
-  process.exit(1);
-});
+// ─── Standalone execution: node src/config/seed.js ───────────────────────────
+if (require.main === module) {
+  (async () => {
+    const client = await pool.connect();
+    try {
+      await client.query('DELETE FROM jobs');
+      console.log('Cleared existing jobs');
+      await run(client);
+    } finally {
+      client.release();
+      if (pool.end) await pool.end();
+    }
+  })().catch((err) => {
+    console.error('Seed failed:', err.message);
+    process.exit(1);
+  });
+}

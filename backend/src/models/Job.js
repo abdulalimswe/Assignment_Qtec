@@ -8,27 +8,28 @@ const findAll = async ({ search, category, location, limit, offset }) => {
     params.push(`%${search}%`);
     const idx = params.length;
     conditions.push(
-      `(title ILIKE $${idx} OR company ILIKE $${idx} OR location ILIKE $${idx})`
+      `(title LIKE $${idx} OR company LIKE $${idx} OR location LIKE $${idx})`
     );
   }
 
   if (category) {
     params.push(`%${category}%`);
-    conditions.push(`category ILIKE $${params.length}`);
+    conditions.push(`category LIKE $${params.length}`);
   }
 
   if (location) {
     params.push(`%${location}%`);
-    conditions.push(`location ILIKE $${params.length}`);
+    conditions.push(`location LIKE $${params.length}`);
   }
 
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
   const countResult = await pool.query(
-    `SELECT COUNT(*) FROM jobs ${where}`,
+    `SELECT COUNT(*) AS count FROM jobs ${where}`,
     params
   );
-  const total = parseInt(countResult.rows[0].count, 10);
+  const countRow = countResult.rows[0];
+  const total = parseInt(countRow.count ?? countRow['COUNT(*)'] ?? 0, 10);
 
   params.push(limit);
   params.push(offset);
